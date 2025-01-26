@@ -61,7 +61,9 @@ export class Line {
     return targetFrame.totalPinesDown
   }
 
-  /* get score(): number {
-    // TODO - handle score addition taking into account every Frame + Bonus Balls scores
-  } */
+  get score(): number {
+    return this.frames.reduce((accumulator, _, index) => 
+      accumulator + this.getFrameScore(index + 1), 0
+    )
+  }
 }

@@ -1,9 +1,15 @@
-import { Frame } from "./bowling";
+import { Frame, Line } from "./bowling";
 
 describe('Line', () => {
-  test('', () => {
-    expect(console.log('DEBUGGER')).toBeFalsy();
+
+  test('Should sum up Spare scoring correctly', () => {
+    const line = new Line([
+      new Frame([9,1]),
+      new Frame([9,1])
+    ])
+    expect(line.getFrameScore(1)).toEqual(19)
   })
+
 });
 
 describe('Frame', () => {
@@ -15,5 +21,5 @@ describe('Frame', () => {
       expect((error as Error).message).toBe('Frame should include exactly 2 tries');      
     }
   })
-  
+
 });
