@@ -7,6 +7,7 @@ describe('Line', () => {
 });
 
 describe('Frame', () => {
+
   test('No tries', () => {
     try {
       const frame = new Frame([]);
@@ -14,4 +15,5 @@ describe('Frame', () => {
       expect((error as Error).message).toBe('Frame should include exactly 2 tries');      
     }
   })
+  
 });

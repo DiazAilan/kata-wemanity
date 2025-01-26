@@ -21,11 +21,6 @@ export class Frame {
   get totalPinesDown(): number {
     return this.tries.reduce((accumulator, current) => accumulator + current, 0)
   }
-
-  get score(): number {
-    // TODO - Swap spare addition logic to next Frame when working with Line's class score evaluation method
-    return this.isSpare ? 10 + this.totalPinesDown : this.totalPinesDown
-  }
 }
 
 export class Line {
@@ -48,6 +43,22 @@ export class Line {
 
   addBonusBalls(): void {
     // TODO - add a meaningful way to add bonus tries to Line's structure
+  }
+
+  getFrameScore(target: number) {
+    const targetFrame = this.frames[target - 1]
+    const nextFrame = this.frames[target]
+
+    if (nextFrame) {
+      if (targetFrame.isSpare) {
+        return nextFrame.tries[0] + 10
+      }
+      if (targetFrame.isStrike) {
+        return nextFrame.totalPinesDown + 10
+      }
+    }
+    
+    return targetFrame.totalPinesDown
   }
 
   /* get score(): number {
