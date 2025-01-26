@@ -1,12 +1,11 @@
-class Try {
-  pinesDown: number;
-}
+export class Frame {
 
-class Frame {
+  tries: number[];
 
-  tries: Try[];
-
-  constructor(tries: Try[]) {
+  constructor(tries: number[]) {
+    if (!tries || tries.length !== 2) {
+      throw new Error('Frame should include exactly 2 tries')
+    }
     this.tries = tries
   }
   
@@ -16,11 +15,11 @@ class Frame {
 
   get isStrike(): boolean {
     // TODO - Evaluate in Line's context
-    return this.tries[0].pinesDown === 10;
+    return this.tries[0] === 10;
   }
 
   get totalPinesDown(): number {
-    return this.tries.reduce((accumulator, current) => accumulator + current.pinesDown, 0)
+    return this.tries.reduce((accumulator, current) => accumulator + current, 0)
   }
 
   get score(): number {
@@ -29,7 +28,7 @@ class Frame {
   }
 }
 
-class Line {
+export class Line {
   frames: Frame[];
 
   constructor(frames: Frame[]) {
@@ -51,7 +50,7 @@ class Line {
     // TODO - add a meaningful way to add bonus tries to Line's structure
   }
 
-  get score(): number {
+  /* get score(): number {
     // TODO - handle score addition taking into account every Frame + Bonus Balls scores
-  }
+  } */
 }
