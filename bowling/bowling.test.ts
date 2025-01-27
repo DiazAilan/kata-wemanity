@@ -7,7 +7,7 @@ describe('Line', () => {
       new Frame([9,1]),
       new Frame([9,1])
     ])
-    expect(line.getFrameScore(1)).toEqual(19)
+    expect(line['getFrameScore'](0)).toEqual(19)
   })
 
   test('Should add up Strike scoring correctly', () => {
@@ -15,7 +15,7 @@ describe('Line', () => {
       new Frame([10]),
       new Frame([9,1])
     ])
-    expect(line.getFrameScore(1)).toEqual(20)
+    expect(line['getFrameScore'](0)).toEqual(20)
   })
 
   describe('Suggested case 1', () => {
@@ -32,8 +32,8 @@ describe('Line', () => {
         new Frame([10]),
         new Frame([10, 10, 10]),
       ])
-      expect(line.getFrameScore(9)).toBe(30)
-      expect(line.getFrameScore(10)).toBe(30)
+      expect(line['getFrameScore'](8)).toBe(30)
+      expect(line['getFrameScore'](9)).toBe(30)
       expect(line.score).toBe(300)
     })
   })
@@ -74,15 +74,65 @@ describe('Line', () => {
     })
   })
 
+  describe('Endgame procedure', () => {
+    test('8 strikes, 4 miss: Should score 210 points', () => {
+      const line = new Line([
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([0,0]),
+        new Frame([0,0]),
+      ])
+      expect(line.score).toBe(210)
+    })
+
+    test('9 strikes, 5/5 spare, strike: Should score 275 points', () => {
+      const line = new Line([
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([5,5,10]),
+      ])
+      expect(line.score).toBe(275)
+    })
+
+    test('8 strikes, two misses, 3 strikes: Should score 240 points', () => {
+      const line = new Line([
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([0,0]),
+        new Frame([10,10,10]),
+      ])
+      expect(line.score).toBe(240)
+    })
+  })
+
 });
 
 describe('Frame', () => {
 
-  test('No tries', () => {
+  test('No rolls', () => {
     try {
       const frame = new Frame([]);
     } catch (error) {
-      expect((error as Error).message).toBe('Frame should include 1 to 3 tries');
+      expect((error as Error).message).toBe('Frame should include 1 to 3 rolls');
     }
   })
 
