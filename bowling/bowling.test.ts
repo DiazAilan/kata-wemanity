@@ -18,6 +18,62 @@ describe('Line', () => {
     expect(line.getFrameScore(1)).toEqual(20)
   })
 
+  describe('Suggested case 1', () => {
+    test('12 strikes: Should score 300 points', () => {
+      const line = new Line([
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10]),
+        new Frame([10])
+      ])
+      expect(line.score).toBe(300)
+    })
+  })
+
+  describe('Suggested case 2', () => {
+    test('10 pairs of 9 and miss: Should score 90 points', () => {
+      const line = new Line([
+        new Frame([9,0]),
+        new Frame([9,0]),
+        new Frame([9,0]),
+        new Frame([9,0]),
+        new Frame([9,0]),
+        new Frame([9,0]),
+        new Frame([9,0]),
+        new Frame([9,0]),
+        new Frame([9,0]),
+        new Frame([9,0]),
+      ])
+      expect(line.score).toBe(90)
+    })
+  })
+
+  describe('Suggested case 3', () => {
+    test('10 pairs of 5 and spare, with a final 5: Should score 150 points', () => {
+      const line = new Line([
+        new Frame([5,5]),
+        new Frame([5,5]),
+        new Frame([5,5]),
+        new Frame([5,5]),
+        new Frame([5,5]),
+        new Frame([5,5]),
+        new Frame([5,5]),
+        new Frame([5,5]),
+        new Frame([5,5]),
+        new Frame([5,5,5])
+      ])
+      expect(line.score).toBe(150)
+    })
+  })
+
 });
 
 describe('Frame', () => {
@@ -26,7 +82,7 @@ describe('Frame', () => {
     try {
       const frame = new Frame([]);
     } catch (error) {
-      expect((error as Error).message).toBe('Frame should include 1 or 2 tries');
+      expect((error as Error).message).toBe('Frame should include 1 to 4 tries');
     }
   })
 

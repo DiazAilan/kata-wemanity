@@ -3,14 +3,14 @@ export class Frame {
   tries: number[];
 
   constructor(tries: number[]) {
-    if (!tries || !tries.length || tries.length > 2) {
-      throw new Error('Frame should include 1 or 2 tries')
+    if (!tries || !tries.length || tries.length > 4) {
+      throw new Error('Frame should include 1 to 4 tries')
     }
     this.tries = tries
   }
   
   get isSpare(): boolean {
-    return this.tries.length === 2 && this.totalPinesDown === 10;
+    return this.tries.length > 1 && (this.tries[0] + this.tries[1] === 10);
   }
 
   get isStrike(): boolean {
@@ -38,10 +38,6 @@ export class Line {
       return this.lastFrame.isSpare ? 1 : 2
     }
     return 0
-  }
-
-  addBonusBalls(): void {
-    // TODO - add a meaningful way to add bonus tries to Line's structure
   }
 
   getFrameScore(target: number) {
