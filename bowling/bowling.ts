@@ -3,18 +3,17 @@ export class Frame {
   tries: number[];
 
   constructor(tries: number[]) {
-    if (!tries || tries.length !== 2) {
-      throw new Error('Frame should include exactly 2 tries')
+    if (!tries || !tries.length || tries.length > 2) {
+      throw new Error('Frame should include 1 or 2 tries')
     }
     this.tries = tries
   }
   
   get isSpare(): boolean {
-    return this.totalPinesDown === 10;
+    return this.tries.length === 2 && this.totalPinesDown === 10;
   }
 
   get isStrike(): boolean {
-    // TODO - Evaluate in Line's context
     return this.tries[0] === 10;
   }
 
