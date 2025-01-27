@@ -4,7 +4,7 @@ export class Frame {
 
   constructor(tries: number[]) {
     if (!tries || !tries.length || tries.length > 4) {
-      throw new Error('Frame should include 1 to 4 tries')
+      throw new Error('Frame should include 1 to 3 tries')
     }
     this.tries = tries
   }
@@ -40,7 +40,7 @@ export class Line {
     return 0
   }
 
-  getFrameScore(target: number) {
+  getFrameScore(target: number): number {
     const targetFrame = this.frames[target - 1]
     const nextFrame = this.frames[target]
 
@@ -49,7 +49,9 @@ export class Line {
         return nextFrame.tries[0] + 10
       }
       if (targetFrame.isStrike) {
-        return nextFrame.totalPinesDown + 10
+        return nextFrame.tries.length > 1
+          ? nextFrame.tries[0] + nextFrame.tries[1] + 10
+          : nextFrame.totalPinesDown + this.frames[target + 1].tries[0] + 10
       }
     }
     

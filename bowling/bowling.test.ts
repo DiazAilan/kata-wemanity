@@ -30,10 +30,10 @@ describe('Line', () => {
         new Frame([10]),
         new Frame([10]),
         new Frame([10]),
-        new Frame([10]),
-        new Frame([10]),
-        new Frame([10])
+        new Frame([10, 10, 10]),
       ])
+      expect(line.getFrameScore(9)).toBe(30)
+      expect(line.getFrameScore(10)).toBe(30)
       expect(line.score).toBe(300)
     })
   })
@@ -82,7 +82,7 @@ describe('Frame', () => {
     try {
       const frame = new Frame([]);
     } catch (error) {
-      expect((error as Error).message).toBe('Frame should include 1 to 4 tries');
+      expect((error as Error).message).toBe('Frame should include 1 to 3 tries');
     }
   })
 
